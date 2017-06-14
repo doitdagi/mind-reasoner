@@ -1,25 +1,35 @@
 package io.mind.reasoner.app.room;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import io.mind.reasoner.app.device.Device;
 import io.mind.reasoner.app.utility.MomentTypes;
+import io.mind.reasoner.app.utility.SecurityLevel;
 
 @Entity
 @Table(name = "room")
 public class Room {
 
-
 	@Id
 	private String roomName;
 
-	private String moment;
+	private MomentTypes moment;
 
-	
+	private String description;
+
+	private SecurityLevel securityLevel;
+
+	@OneToMany
+	private List<Device> devices;
+
 	public Room() {
-		// TODO Auto-generated constructor stub
 	}
+
 	/**
 	 * By default room starts form default moment
 	 * 
@@ -27,16 +37,17 @@ public class Room {
 	 *            Room ID
 	 * 
 	 */
-	public Room(String roomName, String moment) {
+	public Room(String roomName, MomentTypes moment, SecurityLevel securityLevel) {
 		this.roomName = roomName;
-		this.moment = MomentTypes.DEFAULT.toString();
+		this.moment = moment;
+		this.securityLevel = securityLevel;
 	}
 
-	public String getMoment() {
+	public MomentTypes getMoment() {
 		return moment;
 	}
 
-	public void setMoment(String moment) {
+	public void setMoment(MomentTypes moment) {
 		this.moment = moment;
 	}
 
@@ -47,4 +58,29 @@ public class Room {
 	public void setRoomName(String roomName) {
 		this.roomName = roomName;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public SecurityLevel getSecurityLevel() {
+		return securityLevel;
+	}
+
+	public void setSecurityLevel(SecurityLevel securityLevel) {
+		this.securityLevel = securityLevel;
+	}
+
+	public List<Device> getDevices() {
+		return devices;
+	}
+
+	public void setDevices(List<Device> devices) {
+		this.devices = devices;
+	}
+
 }
