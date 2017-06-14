@@ -1,4 +1,4 @@
-package io.mind.reasoner.appstarter;
+package io.mind.reasoner.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -7,8 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author dagi
  *
  */
+import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
-public class MindReasonerApiApp {
+@ComponentScan(basePackages = {"io.mind.reasoner.app.*"})
+public class MindReasonerApp {
 
 	public static void main(String[] args) {
 		
@@ -19,7 +21,7 @@ public class MindReasonerApiApp {
 		 * - Perform class path scan
 		 * -  Start Tomcat server
 		 */
-		SpringApplication.run(MindReasonerApiApp.class, args);
+		SpringApplication.run(MindReasonerApp.class, args);
 		
 		
 		

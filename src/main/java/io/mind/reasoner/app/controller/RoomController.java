@@ -1,5 +1,6 @@
-package io.mind.reasoner.appstarter;
+package io.mind.reasoner.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.mind.reasoner.model.Room;
+import io.mind.reasoner.app.model.Room;
+import io.mind.reasoner.app.services.RoomService;
 
 @RestController
 @RequestMapping("rooms/") 
@@ -18,8 +20,8 @@ public class RoomController {
 	@Autowired
 	private RoomService roomService;
 	
-	
-	/**
+	List<Room> roomList = new ArrayList<Room>();
+	/*
 	 * Get all rooms
 	 * @param roomId
 	 * @return
@@ -39,14 +41,17 @@ public class RoomController {
     public Room getRoom(@PathVariable String roomId) {
 		return roomService.getRoom(roomId);
 	}
-	
+	 
 	/**
 	 * Add room
 	 * @param room
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-	public void addRoom(@RequestBody Room room) {
-		roomService.addRoom(room);
+//	public void addRoom(@RequestBody Room room) {
+	public void addRomm(String roomName) {
+		System.err.println("dfsadfasdfsd");
+		roomService.addRoom(new Room(roomName, ""));
+//		roomService.addRoom(room);
 	}
 	
 	/**
@@ -65,7 +70,7 @@ public class RoomController {
 	 */
 	@RequestMapping(method=RequestMethod.PUT, value = "{roomId}")
 	public void updateRoom(@RequestBody Room room, @PathVariable String roomId) {
-		roomService.updateRoom(roomId, room);
+		roomService.updateRoom(room);
 	}
 	
 	

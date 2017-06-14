@@ -1,39 +1,50 @@
-package io.mind.reasoner.model;
+package io.mind.reasoner.app.model;
 
-import io.mind.reasoner.utility.MomentTypes;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import io.mind.reasoner.app.utility.MomentTypes;
+
+@Entity
+@Table(name = "room")
 public class Room {
-	
-	private String roomID;
-	
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
+
+	private String roomName;
+
 	private String moment;
- 
-	public Room() {
-	}
-	
+
 	/**
+	 * By default room starts form default moment
+	 * 
 	 * @param roomID
-	 * 			Room ID
+	 *            Room ID
+	 * 
 	 */
-	public Room(String roomID) {
-		this.roomID = roomID;
+	public Room(String roomName, String moment) {
+		this.roomName = roomName;
+		this.moment = MomentTypes.DEFAULT.toString();
 	}
 
-	
 	public String getMoment() {
-		return MomentTypes.DEFAULT.toString();
+		return moment;
 	}
 
 	public void setMoment(String moment) {
 		this.moment = moment;
 	}
 
-	public String getRoomID() {
-		return roomID;
+	public String getRoomName() {
+		return roomName;
 	}
 
-	public void setRoomID(String roomID) {
-		this.roomID = roomID;
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
 	}
-	
 }

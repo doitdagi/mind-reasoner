@@ -1,4 +1,4 @@
-package io.mind.reasoner.utility;
+package io.mind.reasoner.app.utility;
 
 public enum MomentTypes {
 	DEFAULT,

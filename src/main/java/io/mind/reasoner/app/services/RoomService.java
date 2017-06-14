@@ -1,12 +1,12 @@
-package io.mind.reasoner.appstarter;
+package io.mind.reasoner.app.services;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.mind.reasoner.model.Room;
+import io.mind.reasoner.app.dao.RoomDao;
+import io.mind.reasoner.app.model.Room;
 
 /**
  * Services in spring are singleton, (a single instance of this class will be
@@ -16,58 +16,44 @@ import io.mind.reasoner.model.Room;
  *
  */
 
-@Service
+@Service    
+//@ComponentScan(basePackages = {"io.mind.reasoner.dao"})
 public class RoomService {
 
-	private List<Room> rooms = new ArrayList<Room>(Arrays.asList(new Room("room1"), new Room("room2")));
-
+ 	@Autowired
+	private RoomDao roomDAO;
+	
 
 	public void addRoom(Room room) {
-		rooms.add(room);
+		roomDAO.save(room);
 	}
 
 	public List<Room> getAllRooms() {
-		return rooms;
+		 //java 8 way of converting iterable to list
+		return (List<Room>) roomDAO.findAll();
 	}
 
 	public void removeRoom(String roomID) {
-		for (Room r : rooms) {
-			if (r.getRoomID().equals(roomID)) {
-				rooms.remove(r);
-				return;
-			}
-		}
+		roomDAO.delete(roomID);
 	}
 
 	public Room getRoom(String roomID) {
-		for (Room r : rooms) {
-			if (r.getRoomID().equals(roomID)) {
-				return r;
-			}
-		}
-		return null;
-	}
+	return roomDAO.findOne(roomID);
+	}  
+		
 
-	public void updateRoom(String id, Room room) {
-		for (Room r : rooms) {
-			if (r.getRoomID().equals(id)) {
-				rooms.set(rooms.indexOf(r), room);
-				return ;
-			}
-		}
+	public void updateRoom( Room room) {
+		roomDAO.save(room);
 	}
 
 	
-	public String currentMoment(String roomId) {
+	public String currentMoment(String roomName) {
 		// TODO: GET ROOM BY ID, and Return room moment
-		for (Room r : rooms) {
-			if (r.getRoomID().equals(roomId)) {
+		for (Room r : getAllRooms()) {
+			if (r.getRoomName().equals(roomName)) {
 				return r.getMoment().toString();
 			}
 		}
 		return null;
 	}
-
-	
-	
 }
