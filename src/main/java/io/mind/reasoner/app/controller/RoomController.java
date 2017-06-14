@@ -37,9 +37,9 @@ public class RoomController {
 	 * @param roomId
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "{roomId}")
-    public Room getRoom(@PathVariable String roomId) {
-		return roomService.getRoom(roomId);
+	@RequestMapping(method = RequestMethod.GET, value = "{roomName}")
+    public Room getRoom(@PathVariable String roomName) {
+		return roomService.getRoom(roomName);
 	}
 	 
 	/**
@@ -47,11 +47,8 @@ public class RoomController {
 	 * @param room
 	 */
 	@RequestMapping(method=RequestMethod.POST)
-//	public void addRoom(@RequestBody Room room) {
-	public void addRomm(String roomName) {
-		System.err.println("dfsadfasdfsd");
-		roomService.addRoom(new Room(roomName, ""));
-//		roomService.addRoom(room);
+   public void addRoom(@RequestBody Room room) {
+		roomService.addRoom(room);
 	}
 	
 	/**

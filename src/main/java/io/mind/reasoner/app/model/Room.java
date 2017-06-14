@@ -20,6 +20,10 @@ public class Room {
 
 	private String moment;
 
+	
+	public Room() {
+		// TODO Auto-generated constructor stub
+	}
 	/**
 	 * By default room starts form default moment
 	 * 
