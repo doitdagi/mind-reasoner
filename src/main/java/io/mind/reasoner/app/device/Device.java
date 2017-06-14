@@ -2,8 +2,11 @@ package io.mind.reasoner.app.device;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.mind.reasoner.app.room.Room;
 import io.mind.reasoner.app.utility.DeviceType;
@@ -19,8 +22,10 @@ public class Device {
 	private String description;
 
 	private DeviceType deviceType;
-
-	@OneToMany
+	
+	@ManyToOne
+	@JoinColumn (name="roomName")
+	@JsonBackReference
 	private Room room;
 	
 	public Device() {

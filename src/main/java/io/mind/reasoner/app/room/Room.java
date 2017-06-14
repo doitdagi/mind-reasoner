@@ -2,6 +2,7 @@ package io.mind.reasoner.app.room;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -24,7 +25,7 @@ public class Room {
 
 	private SecurityLevel securityLevel;
 
-	@OneToMany
+	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
 	private List<Device> devices;
 
 	public Room() {

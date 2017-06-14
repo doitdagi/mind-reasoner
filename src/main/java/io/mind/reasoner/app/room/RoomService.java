@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
  */
 
 @Service    
-//@ComponentScan(basePackages = {"io.mind.reasoner.dao"})
 public class RoomService {
 
  	@Autowired
@@ -26,7 +25,6 @@ public class RoomService {
 	}
 
 	public List<Room> getAllRooms() {
-		 //java 8 way of converting iterable to list
 		return (List<Room>) roomDAO.findAll();
 	}
 
