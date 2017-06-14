@@ -1,8 +1,6 @@
 package io.mind.reasoner.app.model;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,10 +10,8 @@ import io.mind.reasoner.app.utility.MomentTypes;
 @Table(name = "room")
 public class Room {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long id;
 
+	@Id
 	private String roomName;
 
 	private String moment;

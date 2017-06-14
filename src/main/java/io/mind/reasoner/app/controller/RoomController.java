@@ -1,6 +1,5 @@
 package io.mind.reasoner.app.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,6 @@ public class RoomController {
 	@Autowired
 	private RoomService roomService;
 	
-	List<Room> roomList = new ArrayList<Room>();
 	/*
 	 * Get all rooms
 	 * @param roomId
@@ -55,18 +53,18 @@ public class RoomController {
 	 * Delete room
 	 * @param room
 	 */
-	@RequestMapping(method=RequestMethod.DELETE, value = "{roomId}")
-	public void deleteRoom(@PathVariable String roomId) {
-		roomService.removeRoom(roomId);
+	@RequestMapping(method=RequestMethod.DELETE, value = "{roomName}")
+	public void deleteRoom(@PathVariable String roomName) {
+		roomService.removeRoom(roomName);
 	}
 	
 	
 	/**
-	 * Delete room
+	 * Update room
 	 * @param room
 	 */
-	@RequestMapping(method=RequestMethod.PUT, value = "{roomId}")
-	public void updateRoom(@RequestBody Room room, @PathVariable String roomId) {
+	@RequestMapping(method=RequestMethod.PUT, value = "{roomName}")
+	public void updateRoom(@RequestBody Room room) {
 		roomService.updateRoom(room);
 	}
 	
