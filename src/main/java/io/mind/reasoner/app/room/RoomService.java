@@ -1,12 +1,9 @@
-package io.mind.reasoner.app.services;
+package io.mind.reasoner.app.room;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import io.mind.reasoner.app.dao.RoomDao;
-import io.mind.reasoner.app.model.Room;
 
 /**
  * Services in spring are singleton, (a single instance of this class will be
@@ -21,7 +18,7 @@ import io.mind.reasoner.app.model.Room;
 public class RoomService {
 
  	@Autowired
-	private RoomDao roomDAO;
+	private RoomRepository roomDAO;
 	
 
 	public void addRoom(Room room) {

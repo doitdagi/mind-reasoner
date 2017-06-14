@@ -1,4 +1,4 @@
-package io.mind.reasoner.app.model;
+package io.mind.reasoner.app.room;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
