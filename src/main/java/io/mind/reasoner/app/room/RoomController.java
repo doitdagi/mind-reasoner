@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.mind.reasoner.app.utility.MomentType;
+
 @RestController
 @RequestMapping("rooms/") 
 public class RoomController {
@@ -65,19 +67,13 @@ public class RoomController {
 		roomService.updateRoom(room);
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Get moment
 	 * @param roomId
 	 * @return
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "{roomId}/moment")
-    public String currentMoment(@PathVariable String roomId) {
+    public MomentType currentMoment(@PathVariable String roomId) {
 		return roomService.currentMoment(roomId);
 	}
 }

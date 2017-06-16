@@ -1,9 +1,16 @@
 package io.mind.reasoner.app.room;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.ObjectFilter;
+import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import io.mind.reasoner.app.utility.MomentType;
 
 /**
  * Services in spring are singleton, (a single instance of this class will be
@@ -18,6 +25,13 @@ public class RoomService {
 
  	@Autowired
 	private RoomRepository roomDAO;
+ 	
+ 	private static KieContainer kieContainer = null;
+ 	
+	@Autowired
+ 	public RoomService(KieContainer kieContainer) {
+ 		RoomService.kieContainer = kieContainer;
+ 	}
 	
 
 	public void addRoom(Room room) {
@@ -42,13 +56,48 @@ public class RoomService {
 	}
 
 	
-	public String currentMoment(String roomId) {
-		// TODO: GET ROOM BY ID, and Return room moment
-		for (Room r : getAllRooms()) {
-			if (r.getRoomId().equals(roomId)) {
-				return r.getCurrentMoment().toString();
-			}
+	public MomentType currentMoment(String roomId) {
+		MomentType currentMoment = MomentType.UNDETERMINED;
+		Room room = getRoom(roomId);
+		
+		try {
+			// kiesession
+			KieSession kieSession = kieContainer.newKieSession("MomentSession");
+			kieSession.insert(room);
+			kieSession.fireAllRules();
+			currentMoment = findMessage(kieSession);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			room.setCurrentMoment(currentMoment);
+			return currentMoment;
 		}
-		return null;
+	
 	}
+	
+	/**
+	 * Search the {@link KieSession} for bus passes.
+	 */
+	private MomentType findMessage(KieSession kieSession) {
+		// Find all BusPass facts and 1st generation child classes of BusPass.
+				ObjectFilter messageFilter = new ObjectFilter() {
+					//@Override
+					public boolean accept(Object object) {
+						if (MomentType.class.equals(object.getClass())) return true;
+						if (MomentType.class.equals(object.getClass().getSuperclass())) return true;
+						return false;
+					}
+				};
+
+				// printFactsMessage(kieSession);
+
+				List<MomentType> facts = new ArrayList<MomentType>();
+				for (FactHandle handle : kieSession.getFactHandles(messageFilter)) {
+					facts.add((MomentType) kieSession.getObject(handle));
+				}
+				if (facts.size() == 0) {
+					return null;
+				}
+				// Assumes that the rules will always be generating a single bus pass. 
+				return facts.get(0);	}
 }
