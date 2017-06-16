@@ -32,9 +32,9 @@ public class RoomController {
 	 * @param roomId
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "{roomName}")
-    public Room getRoom(@PathVariable String roomName) {
-		return roomService.getRoom(roomName);
+	@RequestMapping(method = RequestMethod.GET, value = "{roomId}")
+    public Room getRoom(@PathVariable String roomId) {
+		return roomService.getRoom(roomId);
 	}
 	 
 	/**
@@ -50,9 +50,9 @@ public class RoomController {
 	 * Delete room
 	 * @param room
 	 */
-	@RequestMapping(method=RequestMethod.DELETE, value = "{roomName}")
-	public void deleteRoom(@PathVariable String roomName) {
-		roomService.removeRoom(roomName);
+	@RequestMapping(method=RequestMethod.DELETE, value = "{roomId}")
+	public void deleteRoom(@PathVariable String roomId) {
+		roomService.removeRoom(roomId);
 	}
 	
 	
@@ -60,7 +60,7 @@ public class RoomController {
 	 * Update room
 	 * @param room
 	 */
-	@RequestMapping(method=RequestMethod.PUT, value = "{roomName}")
+	@RequestMapping(method=RequestMethod.PUT, value = "{roomId}")
 	public void updateRoom(@RequestBody Room room) {
 		roomService.updateRoom(room);
 	}

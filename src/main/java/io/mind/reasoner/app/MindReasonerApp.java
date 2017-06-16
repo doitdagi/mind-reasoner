@@ -15,7 +15,7 @@ public class MindReasonerApp {
 
 	public static void main(String[] args) {
 		
-		//Configure and start this class as Spring boot apption
+		//Configure and start this class as Spring boot application 
 		/**
 		 * - Setup the default configuration
 		 * - Starts Spring application context

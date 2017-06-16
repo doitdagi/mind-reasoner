@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.mind.reasoner.app.utility.DeviceFactory;
+
 @Service
 public class DeviceService {
 
@@ -12,8 +14,8 @@ public class DeviceService {
 	private DeviceRepository deviceDAO;
 
 	public void addDevice(Device device) {
-		deviceDAO.save(device);
-		System.err.println("Device added");
+		Device d = DeviceFactory.getInstance().createProperDevice(device);
+		deviceDAO.save(d);
 	}
 
 	public List<Device> getAllDevices() {
@@ -32,8 +34,8 @@ public class DeviceService {
 		deviceDAO.save(device);
 	}
 
-	public List<Device> getDevicesByRoom(String room) {
-		return deviceDAO.getDevicesByRoom(room);
+	public List<Device> getDevicesByRoom(String roomId) {
+		return deviceDAO.getDevicesByRoom(roomId);
 	}
 
 }

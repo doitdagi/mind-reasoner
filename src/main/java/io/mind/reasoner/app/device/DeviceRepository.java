@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 @Transactional
 public interface DeviceRepository extends CrudRepository<Device, String> {
 	
-	public List<Device> getDevicesByRoom(String room);
+	public List<Device> getDevicesByRoom(String roomId);
 
 }

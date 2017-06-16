@@ -34,9 +34,9 @@ public class DeviceController {
 	/**
 	 * Get all devices from the all the rooms
 	 */
-	@RequestMapping(method = RequestMethod.GET, value = "{roomName}/devices")
-	public List<Device> getAllDevicesFromRoom(@PathVariable String roomName) {
-		return deviceService.getDevicesByRoom(roomName);
+	@RequestMapping(method = RequestMethod.GET, value = "{roomId}/devices")
+	public List<Device> getAllDevicesFromRoom(@PathVariable String roomId) {
+		return deviceService.getDevicesByRoom(roomId);
 	}
 	
 	
@@ -44,11 +44,9 @@ public class DeviceController {
 	/**
 	 * Add device into room
 	 */
-	@RequestMapping(method=RequestMethod.POST, value = "{roomName}/devices")
-	public void addDevice(@RequestBody Device device, @PathVariable String roomName) {
-		System.err.println("Device:"+device.getName()+"...."+roomName);
-//	   Room r = new Room(roomName, null, null);
-		Room r = roomService.getRoom(roomName);
+	@RequestMapping(method=RequestMethod.POST, value = "{roomId}/devices")
+	public void addDevice(@RequestBody Device device, @PathVariable String roomId) {
+		Room r = roomService.getRoom(roomId);
 		device.setRoom(r);
  		deviceService.addDevice(device);
 	}
@@ -78,8 +76,8 @@ public class DeviceController {
 	/**
 	 * update device room
 	 */
-	@RequestMapping(method=RequestMethod.PUT, value = "{roomName}/devices/{deviceId}")
-	public void updateDevice(@RequestBody Device device, @PathVariable String roomName, @PathVariable String deviceId) {
+	@RequestMapping(method=RequestMethod.PUT, value = "{roomId}/devices/{deviceId}")
+	public void updateDevice(@RequestBody Device device, @PathVariable String roomId, @PathVariable String deviceId) {
 		//get the room
 		//TODO and update the device
 		deviceService.updatesDevice(device);
@@ -87,9 +85,9 @@ public class DeviceController {
 	/**
 	 * remove device from room
 	 */
-	@RequestMapping(method=RequestMethod.DELETE, value = "{roomName}/devices/{deviceId}")
-	public void deleteDevice(@PathVariable String deviceID) {
-		deviceService.removeDevice(deviceID);
+	@RequestMapping(method=RequestMethod.DELETE, value = "{roomId}/devices/{deviceId}")
+	public void deleteDevice(@PathVariable String roomId) {
+		deviceService.removeDevice(roomId);
 	}
 	
 	

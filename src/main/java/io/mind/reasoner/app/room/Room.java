@@ -9,24 +9,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import io.mind.reasoner.app.device.Device;
-import io.mind.reasoner.app.utility.MomentTypes;
-import io.mind.reasoner.app.utility.SecurityLevel;
+import io.mind.reasoner.app.utility.MomentType;
 
 @Entity
 @Table(name = "room")
 public class Room {
 
 	@Id
+	private String roomId;
+	
 	private String roomName;
 
-	private MomentTypes moment;
+	private String roomDescription;
 
-	private String description;
-
-	private SecurityLevel securityLevel;
+	private MomentType currentMoment;
 
 	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
 	private List<Device> devices;
+	
+	
+	{
+		this.currentMoment = MomentType.DEFAULT;
+	}
 
 	public Room() {
 	}
@@ -38,18 +42,18 @@ public class Room {
 	 *            Room ID
 	 * 
 	 */
-	public Room(String roomName, MomentTypes moment, SecurityLevel securityLevel) {
+	public Room(String roomId, String roomName,String roomDescription) {
+		this.roomId = roomId;
 		this.roomName = roomName;
-		this.moment = moment;
-		this.securityLevel = securityLevel;
+		this.roomDescription = roomDescription;
 	}
 
-	public MomentTypes getMoment() {
-		return moment;
+	public String getRoomId() {
+		return roomId;
 	}
 
-	public void setMoment(MomentTypes moment) {
-		this.moment = moment;
+	public void setRoomId(String roomId) {
+		this.roomId = roomId;
 	}
 
 	public String getRoomName() {
@@ -60,21 +64,15 @@ public class Room {
 		this.roomName = roomName;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getRoomDescription() {
+		return roomDescription;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setRoomDescription(String roomDescription) {
+		this.roomDescription = roomDescription;
 	}
 
-	public SecurityLevel getSecurityLevel() {
-		return securityLevel;
-	}
 
-	public void setSecurityLevel(SecurityLevel securityLevel) {
-		this.securityLevel = securityLevel;
-	}
 
 	public List<Device> getDevices() {
 		return devices;
@@ -84,4 +82,12 @@ public class Room {
 		this.devices = devices;
 	}
 
+	public MomentType getCurrentMoment() {
+		return currentMoment;
+	}
+
+	public void setCurrentMoment(MomentType currentMoment) {
+		this.currentMoment = currentMoment;
+	}
+	
 }

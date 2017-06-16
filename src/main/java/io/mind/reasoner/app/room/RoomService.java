@@ -42,11 +42,11 @@ public class RoomService {
 	}
 
 	
-	public String currentMoment(String roomName) {
+	public String currentMoment(String roomId) {
 		// TODO: GET ROOM BY ID, and Return room moment
 		for (Room r : getAllRooms()) {
-			if (r.getRoomName().equals(roomName)) {
-				return r.getMoment().toString();
+			if (r.getRoomId().equals(roomId)) {
+				return r.getCurrentMoment().toString();
 			}
 		}
 		return null;

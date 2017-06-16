@@ -1,6 +1,12 @@
 package io.mind.reasoner.app.utility;
 
 public enum DeviceType {
-    SENSOR,
-    ACTUATOR
+    LUMINOSITY_SENSOR,
+   	TEMPERATURE_SENSOR,
+   	PRESENCE_SENSOR, 
+   	SECURITY_DEVICE,
+   	OUTLET_ACTUATOR,
+	AUDIO_ACTUATOR,
+	TELEVISON,
+	ROLLERSHUTTER
 }

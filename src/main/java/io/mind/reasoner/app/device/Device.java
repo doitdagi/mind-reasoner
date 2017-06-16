@@ -2,6 +2,8 @@ package io.mind.reasoner.app.device;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -13,6 +15,7 @@ import io.mind.reasoner.app.utility.DeviceType;
 
 @Entity
 @Table(name = "device")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE) 
 public class Device {
 	@Id
 	private String id;
@@ -24,11 +27,19 @@ public class Device {
 	private DeviceType deviceType;
 	
 	@ManyToOne
-	@JoinColumn (name="roomName")
+	@JoinColumn (name="roomId")
 	@JsonBackReference
 	private Room room;
 	
 	public Device() {
+	} 
+	
+	public Device(Device device) {
+		this.id = device.id;
+		this.name = device.name;
+		this.description = device.description;
+		this.deviceType  = device.deviceType;
+		this.room = device.room;
 	}
 
 
