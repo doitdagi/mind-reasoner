@@ -1,0 +1,29 @@
+1. What i have done after HERE
+=====================================================================
+ - Study spring boot and drools, also some theoretical staffs, a little bit about RETE, ONTOLOGY...
+_ and implement a small project:MIND Room MOMENTS 
+__________Others staffs___________________________________
+* we are doing research on negotiation protocols
+* we (particularly me and Nicola) wrote an inter reg EU project proposal 80+
+-
+2. What i plan for the next 21 days n future
+=====================================================================
+- we need to have an ontology, we need to design it together
+- comparison of rule engines and choose the right one for our problem domain
+😀 i planned to run kind of workshop for students at ANCONA and study which kind of rule modeling
+  language non-logic/AI people would love
+- define a small case study and fully implement and integrate to the system
+- defining rules
+- definition/specification of rules in formal language(which decide together, FOL, PL, Description logic...many option),
+ so that it will be easier to be understood by future developers and also easily maintainable
+
+
++====================================================================================
+ ----what I would suggest for these 3 weeks is ..to do a small and all-inclusive app
+what?
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    + small scenario definition
+    + definition of rules
+    + formal specification (FOL)
+    + Implementation (Drools and Spring Boot)
+    + Integration with mind app (but first Micro-service architecture ..understand)
