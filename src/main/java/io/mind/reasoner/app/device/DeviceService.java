@@ -14,24 +14,23 @@ public class DeviceService {
 
 	@Autowired
 	private DeviceRepository deviceDAO;
-	
-	KieSession kieSession ;
 
-	
+	KieSession kieSession;
+
 	private static KieContainer kieContainer = null;
- 	
+
 	@Autowired
- 	public DeviceService(KieContainer kieContainer) {
+	public DeviceService(KieContainer kieContainer) {
 		DeviceService.kieContainer = kieContainer;
- 	}
+	}
 
 	public void addDevice(Device device) {
 		Device d = DeviceFactory.getInstance().createProperDevice(device);
 		deviceDAO.save(d);
-		KieSession kieSession = kieContainer.newKieSession("MomentSession");
-
-		kieSession.insert(device);
-		kieSession.fireAllRules();
+		// : Check if it is really need
+		// KieSession kieSession = kieContainer.newKieSession("MomentSession");
+		// kieSession.insert(device);
+		// kieSession.fireAllRules();
 	}
 
 	public List<Device> getAllDevices() {

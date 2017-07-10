@@ -5,6 +5,6 @@ public enum MomentType {
 	IN_HOME,
 	OUT_HOME,
 	TV_MOMENT, 
-	UNDETERMINED,
+	UNKNOWN,
 	IN_ROOM,
 }

@@ -15,31 +15,20 @@ import io.mind.reasoner.app.utility.ACValues;
 
 /**
 insert all devices 
-describtive rule names
+desscriptive rule names
 remove insert device from add device
 */
 
-rule "DEFAULT_MOMENT"
+rule "UNKNOWN"
 	when 
- 		not (Room(getCurrentMoment() == MomentType.DEFAULT));
+ 		not (Room(getCurrentMoment() == MomentType.UNKNOWN));
  		$room : Room($devices : getDevices());
  		PresenceSensor(getDeviceType()==DeviceType.PRESENCE_SENSOR, getCurrentState()==	PresenceStates.UNDETERMINED) from $devices
  		$tv :Television(getDeviceType()==DeviceType.TELEVISON, getStatus()==TVStatus.UNDETERMINED) from $devices
-		$lumosity : LumositySensor(getDeviceType()==DeviceType.LUMINOSITY_SENSOR) from $devices
-		$security : SecurityDevice(getDeviceType()==DeviceType.SECURITY_DEVICE) from $devices
-	    $ac : AirConditioner(getDeviceType()==DeviceType.AIRCONDTIONER) from $devices
-	
+		
 	then
-  		modify($room) {setCurrentMoment(MomentType.DEFAULT)};
-		insert($lumosity);
-		modify($lumosity) {setLevel(LumosityLevel.DAYLIGHT)};
-		insert($security);
-		modify($security) {setLevel(SecurityLevel.MEDIUM)};
-		insert($ac);
-		modify($ac) {setAcValue(ACValues.ROOM_TEMP)};
-		insert($tv);
-		modify($tv) {setStatus(TVStatus.OFF)};
-end
+  		modify($room) {setCurrentMoment(MomentType.UNKNOWN)};
+	end
 
 rule "IN_HOME_MOMENT"
 	when 
@@ -77,7 +66,7 @@ rule "OUT_HOME_MOMENT"
 		insert($lumosity);
 		modify($lumosity) {setLevel(LumosityLevel.DARK)};
 		insert($security);
-		modify($security) {setLevel(SecurityLevel.MEDIUM)};
+		modify($security) {setLevel(SecurityLevel.HIGH)};
 		insert($ac);
 		modify($ac) {setAcValue(ACValues.LOW)};
 		insert($tv);

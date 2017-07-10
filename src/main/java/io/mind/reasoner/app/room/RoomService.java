@@ -59,7 +59,7 @@ public class RoomService {
 
 	
 	public MomentType currentMoment(String roomId) {
-		MomentType currentMoment = MomentType.UNDETERMINED;
+		MomentType currentMoment = MomentType.UNKNOWN;
 		Room room = getRoom(roomId);
 		
 		try {

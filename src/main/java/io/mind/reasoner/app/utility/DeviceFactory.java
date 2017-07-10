@@ -1,12 +1,12 @@
 package io.mind.reasoner.app.utility;
 
 import io.mind.reasoner.app.device.Device;
+import io.mind.reasoner.app.device.list.AirConditioner;
 import io.mind.reasoner.app.device.list.LumositySensor;
 import io.mind.reasoner.app.device.list.PresenceSensor;
 import io.mind.reasoner.app.device.list.RollerShutter;
 import io.mind.reasoner.app.device.list.SecurityDevice;
 import io.mind.reasoner.app.device.list.Television;
-import io.mind.reasoner.app.device.list.AirConditioner;
 
 public class DeviceFactory {
 

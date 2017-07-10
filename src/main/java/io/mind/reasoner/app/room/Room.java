@@ -30,7 +30,7 @@ public class Room {
 	
 	
 	{
-		this.currentMoment = MomentType.UNDETERMINED;
+		this.currentMoment = MomentType.UNKNOWN;
 	}
 
 	public Room() {
