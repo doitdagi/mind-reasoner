@@ -1,0 +1,105 @@
+package com.droolsReasoner.rules
+import io.mind.reasoner.app.utility.MomentType;
+import io.mind.reasoner.app.room.Room;
+import io.mind.reasoner.app.device.Device;
+import io.mind.reasoner.app.utility.DeviceType;
+import io.mind.reasoner.app.device.list.PresenceSensor;
+import io.mind.reasoner.app.device.list.Television;
+import io.mind.reasoner.app.utility.TVStatus;
+import io.mind.reasoner.app.utility.PresenceStates;
+import io.mind.reasoner.app.device.list.*;
+import io.mind.reasoner.app.utility.*;
+import io.mind.reasoner.app.utility.SecurityLevel;
+import io.mind.reasoner.app.utility.ACValues;
+
+
+/**
+insert all devices 
+describtive rule names
+remove insert device from add device
+*/
+
+rule "DEFAULT_MOMENT"
+	when 
+ 		not (Room(getCurrentMoment() == MomentType.DEFAULT));
+ 		$room : Room($devices : getDevices());
+ 		PresenceSensor(getDeviceType()==DeviceType.PRESENCE_SENSOR, getCurrentState()==	PresenceStates.UNDETERMINED) from $devices
+ 		$tv :Television(getDeviceType()==DeviceType.TELEVISON, getStatus()==TVStatus.UNDETERMINED) from $devices
+		$lumosity : LumositySensor(getDeviceType()==DeviceType.LUMINOSITY_SENSOR) from $devices
+		$security : SecurityDevice(getDeviceType()==DeviceType.SECURITY_DEVICE) from $devices
+	    $ac : AirConditioner(getDeviceType()==DeviceType.AIRCONDTIONER) from $devices
+	
+	then
+  		modify($room) {setCurrentMoment(MomentType.DEFAULT)};
+		insert($lumosity);
+		modify($lumosity) {setLevel(LumosityLevel.DAYLIGHT)};
+		insert($security);
+		modify($security) {setLevel(SecurityLevel.MEDIUM)};
+		insert($ac);
+		modify($ac) {setAcValue(ACValues.ROOM_TEMP)};
+		insert($tv);
+		modify($tv) {setStatus(TVStatus.OFF)};
+end
+
+rule "IN_HOME_MOMENT"
+	when 
+ 		not (Room(getCurrentMoment() == MomentType.IN_HOME));
+ 		$room : Room($devices : getDevices());
+ 		PresenceSensor(getDeviceType()==DeviceType.PRESENCE_SENSOR, getCurrentState()==	PresenceStates.NOT_EMPTY) from $devices
+ 		not (Television(getDeviceType()==DeviceType.TELEVISON, getStatus()==TVStatus.ON) from $devices)
+		$lumosity : LumositySensor(getDeviceType()==DeviceType.LUMINOSITY_SENSOR) from $devices
+		$security : SecurityDevice(getDeviceType()==DeviceType.SECURITY_DEVICE) from $devices
+	    $ac : AirConditioner(getDeviceType()==DeviceType.AIRCONDTIONER) from $devices
+	
+	then
+  		modify($room) {setCurrentMoment(MomentType.IN_HOME)};
+  		insert($lumosity);
+		modify($lumosity) {setLevel(LumosityLevel.BRIGHT)};
+		insert($security);
+		modify($security) {setLevel(SecurityLevel.MEDIUM)};
+		insert($ac);
+		modify($ac) {setAcValue(ACValues.HIGH)};
+end
+
+
+rule "OUT_HOME_MOMENT"
+	when 
+ 		not (Room(getCurrentMoment() == MomentType.OUT_HOME));
+ 		$room : Room($devices : getDevices());
+ 		PresenceSensor(getDeviceType()==DeviceType.PRESENCE_SENSOR, getCurrentState()==	PresenceStates.EMPTY) from $devices
+		$tv :Television(getDeviceType()==DeviceType.TELEVISON) from $devices
+		$lumosity : LumositySensor(getDeviceType()==DeviceType.LUMINOSITY_SENSOR) from $devices
+		$security : SecurityDevice(getDeviceType()==DeviceType.SECURITY_DEVICE) from $devices
+	    $ac : AirConditioner(getDeviceType()==DeviceType.AIRCONDTIONER) from $devices
+
+	then
+  		modify($room) {setCurrentMoment(MomentType.OUT_HOME)};
+		insert($lumosity);
+		modify($lumosity) {setLevel(LumosityLevel.DARK)};
+		insert($security);
+		modify($security) {setLevel(SecurityLevel.MEDIUM)};
+		insert($ac);
+		modify($ac) {setAcValue(ACValues.LOW)};
+		insert($tv);
+		modify($tv) {setStatus(TVStatus.OFF)};
+
+end
+
+rule "TV_MOMENT"
+	when 
+ 		not (Room(getCurrentMoment() == MomentType.TV_MOMENT));
+ 		$room : Room($devices : getDevices());
+ 		PresenceSensor(getDeviceType()==DeviceType.PRESENCE_SENSOR, getCurrentState()==	PresenceStates.NOT_EMPTY) from $devices
+		Television(getDeviceType()==DeviceType.TELEVISON, getStatus()==TVStatus.ON) from $devices
+		$lumosity : LumositySensor(getDeviceType()==DeviceType.LUMINOSITY_SENSOR) from $devices
+		$security : SecurityDevice(getDeviceType()==DeviceType.SECURITY_DEVICE) from $devices
+	    $ac : AirConditioner(getDeviceType()==DeviceType.AIRCONDTIONER) from $devices
+	then
+  		modify($room) {setCurrentMoment(MomentType.TV_MOMENT)};
+		insert($lumosity);
+		modify($lumosity) {setLevel(LumosityLevel.DIM)};
+		insert($security);
+		modify($security) {setLevel(SecurityLevel.MEDIUM)};
+		insert($ac);
+		modify($ac) {setAcValue(ACValues.ROOM_TEMP)};
+end

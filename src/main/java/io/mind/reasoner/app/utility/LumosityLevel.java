@@ -4,7 +4,8 @@ public enum LumosityLevel {
 	DARK,
 	DIM,
 	DAYLIGHT,
-	BRIGHT
+	BRIGHT,
+	UNDETERMINED
 	
 
 }

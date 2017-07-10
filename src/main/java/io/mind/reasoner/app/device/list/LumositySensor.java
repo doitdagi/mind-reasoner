@@ -14,7 +14,7 @@ public class LumositySensor extends Device {
 	private LumosityLevel level;
 	
 	{
-		level = LumosityLevel.DAYLIGHT;
+		level = LumosityLevel.UNDETERMINED;
 	}
 
 	public LumositySensor() {

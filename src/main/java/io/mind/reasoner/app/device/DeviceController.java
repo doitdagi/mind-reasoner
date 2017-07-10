@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.mind.reasoner.app.device.list.PresenceSensor;
+import io.mind.reasoner.app.device.list.Television;
 import io.mind.reasoner.app.room.Room;
 import io.mind.reasoner.app.room.RoomService;
 
@@ -70,6 +72,40 @@ public class DeviceController {
 	
 	
 	
+	/**
+	 * Temporary method
+	 * update presense sensor room
+	 */
+	@RequestMapping(method=RequestMethod.PUT, value = "{roomId}/devices/pre/{deviceId}")
+	public void updateDevice(@RequestBody PresenceSensor device, @PathVariable String roomId, @PathVariable String deviceId) {
+		//get the room
+		//TODO and update the device
+		Device dd = deviceService.getDevice(deviceId);
+		if(dd instanceof PresenceSensor) {
+ 			((PresenceSensor) dd).setCurrentState(((PresenceSensor)device).getCurrentState());
+		}
+		deviceService.updatesDevice(dd);
+	}
+	
+	
+	/**
+	 * Temporary method
+	 * update TV sensor room
+	 */
+	@RequestMapping(method=RequestMethod.PUT, value = "{roomId}/devices/tv/{deviceId}")
+	public void updateDevice(@RequestBody Television device, @PathVariable String roomId, @PathVariable String deviceId) {
+		//get the room
+		//TODO and update the device
+		Device dd = deviceService.getDevice(deviceId);
+		if(dd instanceof Television) {
+ 			((Television) dd).setStatus(((Television)device).getStatus());
+		}
+		deviceService.updatesDevice(dd);
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -80,7 +116,11 @@ public class DeviceController {
 	public void updateDevice(@RequestBody Device device, @PathVariable String roomId, @PathVariable String deviceId) {
 		//get the room
 		//TODO and update the device
-		deviceService.updatesDevice(device);
+		Device dd = deviceService.getDevice(deviceId);
+		if(dd instanceof PresenceSensor) {
+ 			((PresenceSensor) dd).setCurrentState(((PresenceSensor)device).getCurrentState());
+		}
+		deviceService.updatesDevice(dd);
 	}
 	/**
 	 * remove device from room
@@ -89,11 +129,6 @@ public class DeviceController {
 	public void deleteDevice(@PathVariable String roomId) {
 		deviceService.removeDevice(roomId);
 	}
-	
-	
-	
-
-	
 	
 	
 

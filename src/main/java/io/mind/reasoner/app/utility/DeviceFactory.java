@@ -6,7 +6,7 @@ import io.mind.reasoner.app.device.list.PresenceSensor;
 import io.mind.reasoner.app.device.list.RollerShutter;
 import io.mind.reasoner.app.device.list.SecurityDevice;
 import io.mind.reasoner.app.device.list.Television;
-import io.mind.reasoner.app.device.list.TemperatureSensor;
+import io.mind.reasoner.app.device.list.AirConditioner;
 
 public class DeviceFactory {
 
@@ -16,8 +16,8 @@ public class DeviceFactory {
 		Device newDevice;
 
 		switch (device.getDeviceType()) {
-		case TEMPERATURE_SENSOR:
-			newDevice = new TemperatureSensor(device);
+		case AIRCONDTIONER:
+			newDevice = new AirConditioner(device);
 			break;
 		case PRESENCE_SENSOR:
 			newDevice = new PresenceSensor(device);

@@ -16,7 +16,7 @@ public class SecurityDevice extends Device {
 	private SecurityLevel level;
 	
 	{
-		level = SecurityLevel.LOW;
+		level = SecurityLevel.UNDETERMINED;
 	}
 	
 	public SecurityDevice() {

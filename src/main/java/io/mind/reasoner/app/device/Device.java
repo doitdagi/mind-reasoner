@@ -1,5 +1,6 @@
 package io.mind.reasoner.app.device;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -15,7 +16,7 @@ import io.mind.reasoner.app.utility.DeviceType;
 
 @Entity
 @Table(name = "device")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE) 
+@Inheritance(strategy=InheritanceType.JOINED) 
 public class Device {
 	@Id
 	private String id;
@@ -27,6 +28,7 @@ public class Device {
 	private DeviceType deviceType;
 	
 	@ManyToOne
+	//(mappedBy = "devices", cascade = CascadeType.ALL)
 	@JoinColumn (name="roomId")
 	@JsonBackReference
 	private Room room;
@@ -99,6 +101,12 @@ public class Device {
 
 	public void setDeviceType(DeviceType deviceType) {
 		this.deviceType = deviceType;
+	}
+
+	@Override
+	public String toString() {
+		return "Device [id=" + id + ", name=" + name + ", description=" + description + ", deviceType=" + deviceType
+				+ ", room=" + room + "]";
 	}
 	
 	

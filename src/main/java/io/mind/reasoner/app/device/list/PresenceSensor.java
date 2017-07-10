@@ -1,21 +1,27 @@
 package io.mind.reasoner.app.device.list;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Where;
+
 import io.mind.reasoner.app.device.Device;
 import io.mind.reasoner.app.utility.PresenceStates;
+import io.mind.reasoner.app.utility.SecurityLevel;
 
 @Entity
 @Table(name="PresenceSensor")
+@Where(clause = "DTYPE = 'PresenceSensor'")
+
 public class PresenceSensor extends Device {
 
 	private PresenceStates currentState;
+	
+	private SecurityLevel level;
+	
+	{
+		currentState = PresenceStates.UNDETERMINED;
+	}
 	
 	public PresenceSensor() {
 		super();
@@ -23,11 +29,11 @@ public class PresenceSensor extends Device {
 	
 	public PresenceSensor(Device device){
 		super(device);
-		currentState = ranodmState();
+	//	currentState = ranodmState();
 	}
 
 	public PresenceStates getCurrentState() {
-		currentState = ranodmState();
+		//currentState = ranodmState();
 		return currentState;
 	}
 
@@ -36,9 +42,9 @@ public class PresenceSensor extends Device {
 	}
 	
 	
-	private PresenceStates ranodmState() { 
-		List<PresenceStates> states = new ArrayList<PresenceStates>((Arrays.asList(PresenceStates.values())));
-		return states.get(ThreadLocalRandom.current().nextInt(0, states.size() ));
-	}
+//	private PresenceStates ranodmState() { 
+//		List<PresenceStates> states = new ArrayList<PresenceStates>((Arrays.asList(PresenceStates.values())));
+//		return states.get(ThreadLocalRandom.current().nextInt(0, states.size() ));
+//	}
 	
 }

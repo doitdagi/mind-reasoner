@@ -9,6 +9,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import io.mind.reasoner.app.device.Device;
+import io.mind.reasoner.app.utility.DeviceType;
 import io.mind.reasoner.app.utility.MomentType;
 
 @Entity
@@ -29,7 +30,7 @@ public class Room {
 	
 	
 	{
-		this.currentMoment = MomentType.DEFAULT;
+		this.currentMoment = MomentType.UNDETERMINED;
 	}
 
 	public Room() {
@@ -89,5 +90,21 @@ public class Room {
 	public void setCurrentMoment(MomentType currentMoment) {
 		this.currentMoment = currentMoment;
 	}
+
+	@Override
+	public String toString() {
+		return "Room [roomId=" + roomId + ", roomName=" + roomName + ", roomDescription=" + roomDescription
+				+ ", currentMoment=" + currentMoment + ", devices=" + devices + "]";
+	}
+	
+	
+	public Device getDeviceByType(DeviceType devType) {
+		for(Device device : devices) {
+			if(device.getDeviceType().equals(devType))
+				return device;
+		}
+		return null;
+	}
+	
 	
 }

@@ -74,6 +74,6 @@ public class RoomController {
 	 */
 	@RequestMapping(method = RequestMethod.GET, value = "{roomId}/moment")
     public MomentType currentMoment(@PathVariable String roomId) {
-		return roomService.currentMoment(roomId);
+				return roomService.currentMoment(roomId);
 	}
 }

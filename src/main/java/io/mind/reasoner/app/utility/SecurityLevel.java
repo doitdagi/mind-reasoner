@@ -4,5 +4,6 @@ public enum SecurityLevel {
 	HIGH,
 	LOW,
 	NO,
-	MEDIUM
+	MEDIUM,
+	UNDETERMINED
 }

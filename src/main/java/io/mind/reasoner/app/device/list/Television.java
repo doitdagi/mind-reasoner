@@ -15,7 +15,7 @@ public class Television extends Device {
 	private TVStatus status;
 	
 	{
-		status = TVStatus.OFF;
+		status = TVStatus.UNDETERMINED;
 	}
 
 	public Television() {

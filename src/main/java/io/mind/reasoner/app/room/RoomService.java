@@ -26,6 +26,8 @@ public class RoomService {
  	@Autowired
 	private RoomRepository roomDAO;
  	
+ 	
+ 	
  	private static KieContainer kieContainer = null;
  	
 	@Autowired
@@ -61,18 +63,23 @@ public class RoomService {
 		Room room = getRoom(roomId);
 		
 		try {
-			// kiesession
+			// kiesession stateful session 
 			KieSession kieSession = kieContainer.newKieSession("MomentSession");
+
 			kieSession.insert(room);
 			kieSession.fireAllRules();
-			currentMoment = findMessage(kieSession);
+
+			//TODO Check why we need to use this, instead of updating the room moment form the rule file
+			// currentMoment = findMessage(kieSession);
+			currentMoment = room.getCurrentMoment();
+			//TODO, WHY WE NEED TO UPDATE HERE, INSTED OF JUST UPDATING IT FROM THE ROOM, NEED TO BE ANSWERERD?
+			updateRoom(room);
+			System.err.println(room.getCurrentMoment()+"....."+currentMoment);
 		} catch (Exception e) {
 			e.printStackTrace();
-		}finally {
-			room.setCurrentMoment(currentMoment);
-			return currentMoment;
 		}
-	
+		return currentMoment;
+
 	}
 	
 	/**

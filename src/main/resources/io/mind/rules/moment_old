@@ -1,0 +1,108 @@
+package com.droolsReasoner.rules
+import io.mind.reasoner.app.utility.MomentType;
+import io.mind.reasoner.app.room.Room;
+import io.mind.reasoner.app.device.Device;
+import io.mind.reasoner.app.utility.DeviceType;
+import io.mind.reasoner.app.device.list.PresenceSensor;
+
+
+
+declare IsDefaultMoment
+	room : Room
+end
+
+
+
+
+rule "IS MOMENT UNDETERMINED"
+	// this is to structure rules in group, so that you can make it active(for priority)or unactive, 
+	//bt ksession.getAgenda().getAgendaGroup( room moment" ).setFocus();
+	
+       agenda-group "room moment"
+      // or we can also prioritorize rules to decide which rule should run and which next,the higer the value is the higer the priority
+    // by default drools use the sequence they were wrote in the file as priority order, i,e. the rule which is written last we run first
+       salience -50
+       
+     
+  when
+  	  $r : Room(getCurrentMoment() == MomentType.UNDETERMINED);
+  	  //JUST TO LEARAN THE NOT, EXISTS SYNTAX
+  	  not(Room(getCurrentMoment() == MomentType.DEFAULT));
+  	  exists(Room()) //CHECK if there exists room object in working memory
+  then
+  		modify($r) {setCurrentMoment(MomentType.DEFAULT)};
+  		insert(new Device("fsda","fdsa","fsdf",DeviceType.SECURITY_DEVICE,$r)); //inserts device in the working memory, thee next time we run exisits querry we should find true
+		// assertion just to create list of rooms in default momemnt, IsDefaultMoment(p) should the give true or fae
+		//When a fact is logically inserted, this fact is dependant on the truth of the "when" clause.
+        // It means that when the rule becomes false the fact is automatically retracted.
+		  insertLogical( new IsDefaultMoment( $r ) ) ;
+end
+
+
+
+rule "IS DEFAULT MOMENT"
+  when
+  	  $r :  Room(getCurrentMoment() == MomentType.DEFAULT)
+     Room($devices : getDevices() )
+//	$device : TemperatureSensor(getDeviceType()==DeviceType.TEMPERATURE_SENSOR) from $devices
+       
+     
+  then 
+    //  		modify($r) {setCurrentMoment(MomentType.IN_HOME)};
+      
+ //    System.out.println("hello..." +$device.getTemperatureValue()); 
+   //   delete( $device ); // if there is device in the working memory remove it
+end
+
+
+rule "add all devices"
+   salience 100
+   
+   when
+       $room : Room();
+    then 
+      insert($room.getDevices().get(0));
+      System.out.println("device added...");
+     end
+        
+
+
+
+
+
+rule "IS IN HOME  MOMENT"
+  when
+ 	not (Room(getCurrentMoment() == MomentType.IN_HOME));
+  //	$r : Room($devices : getDevices());
+//	$presenceSensor : PresenceSensor(getDeviceType()==DeviceType.PRESENCE_SENSOR) from $devices
+      
+  
+  then
+    //  $r.setCurrentMoment(MomentType.OUT_HOME);
+      // System.out.println("hello from home"); 
+end  
+
+rule "IS ABSECENT  MOMENT"
+  when
+  	  $r : Room(getCurrentMoment() == MomentType.OUT_HOME)
+  then
+      $r.setCurrentMoment(MomentType.OUT_HOME);
+end
+
+rule "IS TV  MOMENT"
+  when
+  	  $r : Room(getCurrentMoment() == MomentType.TV_MOMENT)
+  then
+      $r.setCurrentMoment(MomentType.TV_MOMENT);
+end
+
+
+
+function Device getDeviceByType(Room room, DeviceType type) {
+      	for(Device device : room.getDevices()) {
+			if(device.getDeviceType().equals(type)){
+				return device;
+		}
+}
+		return null;
+}

@@ -4,5 +4,6 @@ public enum ActuatorType {
 	OUTLET,
 	AUDIO,
 	TV,
-	ROLLERSHUTTER
+	ROLLERSHUTTER,
+	UNKNOWN
 }
