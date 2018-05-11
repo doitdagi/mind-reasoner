@@ -2,5 +2,6 @@
 <kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
     <kbase name="RoomMomentRules" packages="io.mind.rules">
         <ksession name="MomentSession"/>
+        <ksession name="StatelessMomentSession" type="stateless"/>
     </kbase>
 </kmodule>
